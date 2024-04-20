@@ -1,0 +1,13 @@
+    /* ... existing styles ... */
+
+.cart-count {
+    background-color: #007bff;
+    color: #fff;
+    padding: 2px 5px;
+    border-radius: 50%;
+    font-size: 12px;
+    margin-left: -15px; /* Adjust this value to position the count badge */
+    position: relative;
+    top: -10px;
+  }
+  

@@ -1,0 +1,60 @@
+version: '3'
+
+services:
+  backend:
+    build:
+      context: ./server # point to the main directory
+      dockerfile: Dockerfile # point to the Dockerfile in the main directory
+    restart: always  
+    ports:
+      - "3006:3006" # change the port mapping if your backend is running on port 3006
+    volumes:
+      - ./server:/usr/src/app
+    environment:
+      - NODE_ENV=development
+    command: >
+      sh -c "npm run dbmigrate:dev && npm run dbseed:dev && npm run start"   
+    depends_on:
+      - db
+    links:
+      - db 
+    networks:
+      - mern-app-network   
+
+  frontend:
+    build:
+      context: ./client # point to the client directory
+      dockerfile: Dockerfile # point to the Dockerfile inside the client directory
+    restart: always  
+    ports:
+      - "5000:5000" # Map container port 5000 to host port 5000
+    volumes:
+      - ./client:/usr/src/app
+    networks:
+      - mern-app-network    
+    depends_on:
+      - backend
+    links:
+      - backend
+    
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_HOST: grocery_final-db-1
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: grocery_app
+      POSTGRES_PORT: 5432
+    ports:
+      - "5432:6969" # Map container port 5432 to host port 5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data 
+    networks:
+      - mern-app-network   
+networks:
+  mern-app-network:
+    driver: bridge        
+
+volumes:
+  postgres_data:
