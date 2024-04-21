@@ -43,7 +43,7 @@ const HeaderRoute = ({ children }) => {
     authUser && (
       <div>
         <div className='flex justify-between items-center bg-primary p-5'>
-          <h1 className='text-white text-2xl cursor-pointer' onClick={() => { navigate('/') }}>Crud App</h1>
+          <h1 className='text-white text-2xl cursor-pointer' onClick={() => { navigate('/') }}>Grocery App</h1>
           <div className='bg-white py-2 px-4 rounded flex items-center'>
             
           
